@@ -51,6 +51,8 @@ export default {
           .then(res => {
             console.log(res)
             if (res.data.meta.status === 200) {
+              // 如果登录成功 就把token的值存到本地
+              localStorage.setItem('token', res.data.data.token)
               // 提示成功
               this.$message({
                 message: '登录成功',
