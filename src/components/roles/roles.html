@@ -1,0 +1,83 @@
+<div>
+  <!-- 表格部分 -->
+  <el-table :data="rolesData" style="width: 100%">
+    <el-table-column type="expand">
+      <!-- 下拉弹出的部分 -->
+      <template slot-scope="scope">
+        <el-row class="item" v-for="item in scope.row.children" :key="item.id">
+          <el-col :span="4"
+            ><el-tag>{{ item.authName }}</el-tag
+            ><i class="el-icon-arrow-right"></i
+          ></el-col>
+          <el-col :span="20">
+            <el-row
+              class="item1"
+              v-for="item1 in item.children"
+              :key="item1.id"
+            >
+              <el-col :span="4"
+                ><el-tag type="success">{{ item1.authName }}</el-tag
+                ><i class="el-icon-arrow-right"></i
+              ></el-col>
+              <el-col :span="20">
+                <span
+                  :key="item2.id"
+                  class="item2"
+                  v-for="item2 in item1.children"
+                  ><el-tag type="warning">{{ item2.authName }}</el-tag></span
+                ></el-col
+              >
+            </el-row>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="#"
+      type="index"
+      :index="indexMethod"
+    ></el-table-column>
+    <el-table-column label="角色名称" prop="roleName"></el-table-column>
+    <el-table-column label="描述" prop="roleDesc"></el-table-column>
+    <el-table-column label="操作" prop="desc">
+      <template slot-scope="scope">
+        <el-button
+          type="primary"
+          icon="el-icon-edit"
+          size="mini"
+          plain
+        ></el-button>
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
+          size="mini"
+          plain
+        ></el-button>
+        <el-button
+          @click="showRightsDialog(scope.row)"
+          type="success"
+          icon="el-icon-check"
+          size="mini"
+          plain
+          >分配权限</el-button
+        >
+      </template>
+    </el-table-column>
+  </el-table>
+  <!-- 修改信息的弹窗Dialog -->
+  <el-dialog title="提示" :visible.sync="rolesDialogVisible" width="30%">
+    <el-tree
+      ref="tree"
+      :data="rightsData"
+      show-checkbox
+      node-key="id"
+      :default-expand-all="true"
+      :props="defaultProps"
+    >
+    </el-tree>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="rolesDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="editRights">确 定</el-button>
+    </span>
+  </el-dialog>
+</div>

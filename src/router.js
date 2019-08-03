@@ -6,6 +6,7 @@ import Login from './components/login/login.vue'
 import Home from './components/home/home.vue'
 import User from './components/user/user.vue'
 import Roles from './components/roles/roles.vue'
+import rights from './components/rights/rights.vue'
 Vue.use(VueRouter)
 
 // 路由实例化 并导出
@@ -20,7 +21,8 @@ const router = new VueRouter({
       component: Home,
       children: [
         { path: '/user', component: User },
-        { path: '/roles', component: Roles }
+        { path: '/roles', component: Roles },
+        { path: '/rights', component: rights }
       ]
     }
   ]
